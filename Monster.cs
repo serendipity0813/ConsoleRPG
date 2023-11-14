@@ -29,7 +29,7 @@ namespace ConsoleRPG
         public int Attack { get; set; }
         public int Defend { get; set; }
         public int Money { get; set; }
-        public bool IsDead => Health < 0;
+        public bool IsDead => Health <= 0;
         public static int StageCnt = 0;
         public static Monster[] companys;
 
@@ -48,12 +48,12 @@ namespace ConsoleRPG
             companys = new Monster[10];
 
             companys[0] = new Monster(" ", 1, 1, 1, 1);
-            companys[1] = new Monster("아르바이트", 100, 10, 0, 10);
-            companys[2] = new Monster("중소기업", 250, 40, 10, 50);
-            companys[3] = new Monster("중견기업", 400, 70, 20, 250);
-            companys[4] = new Monster("대기업", 550, 100, 30, 1250);
-            companys[5] = new Monster("글로벌기업", 700, 130, 40, 6250);
-            companys[6] = new Monster("스파르타코딩클럽", 1000, 200, 0, 50000);
+            companys[1] = new Monster("아르바이트", 100, 10, 5, 10);
+            companys[2] = new Monster("중소기업", 250, 40, 15, 50);
+            companys[3] = new Monster("중견기업", 400, 70, 25, 250);
+            companys[4] = new Monster("대기업", 550, 100, 35, 1250);
+            companys[5] = new Monster("글로벌기업", 700, 130, 45, 6250);
+            companys[6] = new Monster("스파르타코딩클럽", 1000, 180, 60, 50000);
           
         }
 
@@ -63,7 +63,7 @@ namespace ConsoleRPG
         {
             Health -= (damage-Defend);
             if (IsDead) Console.WriteLine($"{Name}이(가) 죽었습니다.");
-            else Console.WriteLine($"{Name}이(가) {damage}의 데미지를 받았습니다. 남은 체력: {Health}");
+            else Console.WriteLine($"{Name}이(가) {damage-Defend}의 데미지를 받았습니다. 남은 체력: {Health}");
         }
 
         public static void Work(int idx)
@@ -71,6 +71,8 @@ namespace ConsoleRPG
             Console.Clear();
             int Pmaxhp = Player.player.Health;
             int Mmaxhp = Monster.companys[idx].Health;
+            Player.player.ticket++;
+            Console.WriteLine("회사로 출근합니다!");
             Console.WriteLine($"출근합니다! 플레이어 정보: 체력({Player.player.Health}), 공격력({Player.player.Attack}), 방어력({Player.player.Defend})");
             Console.WriteLine($"회사정보 : 이름({companys[idx].Name}), 체력({companys[idx].Health}), 공격력({companys[idx].Attack}), 방어력({Player.player.Defend})");
             Console.WriteLine("----------------------------------------------------");
@@ -97,9 +99,9 @@ namespace ConsoleRPG
                         Console.WriteLine("일정량 이상의 경험치를 획득, LEVEL UP! - 공격력, 방어력, 체력이 일정수치 상승합니다.");
                         Player.player.exp -= Player.player.Level * 10;
                         Player.player.Level++;
-                        Player.player.Attack++;
-                        Player.player.Defend++;
-                        Player.player.Health += 10;
+                        Player.player.Attack += 5;
+                        Player.player.Defend += 5;
+                        Player.player.Health += 50;
 
                     }
                     break;

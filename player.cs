@@ -45,7 +45,7 @@ namespace ConsoleRPG
         public int Money { get; set; }
         public int exp = 0;
         public int ticket = 0;
-        public bool IsDead => Health < 0;
+        public bool IsDead => Health <= 0;
         public static Player player;
 
 
@@ -71,7 +71,7 @@ namespace ConsoleRPG
         {
             Health -= (damage - player.Defend);
             if (IsDead) Console.WriteLine($"{Name}이(가) 죽었습니다.");
-            else Console.WriteLine($"{Name}이(가) {damage}의 데미지를 받았습니다. 남은 체력: {Health}");
+            else Console.WriteLine($"{Name}이(가) {damage-Defend}의 데미지를 받았습니다. 남은 체력: {Health}");
         }
 
         public static int GetBonusAttack()

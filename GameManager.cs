@@ -89,6 +89,7 @@ namespace ConsoleRPG
             Console.WriteLine("소유하고 있는 아이템을 확인합니다.");
             Console.WriteLine();
             Console.WriteLine("[아이템 목록]");
+            Console.WriteLine();
             for (int i = 1; i < Item.ItemCnt; i++)
             {
                 if (Item.items[i].Have == true)
@@ -123,6 +124,7 @@ namespace ConsoleRPG
 
             }
 
+            Console.Clear();
         }
 
         public static void DisplayShop()
@@ -462,77 +464,88 @@ namespace ConsoleRPG
             Console.Clear();
             Console.WriteLine("ticket을 5개 소비하고 만나고자 하는 지인을 선택하세요");
             Console.WriteLine($"보유티켓 : {Player.player.ticket}");
-            Console.WriteLine("1. 부모님");
-            Console.WriteLine("2. 학창시절 친구");
-            Console.WriteLine("3. 직장 동료");
-            Console.WriteLine("4. 대학교 동기");
-            Console.WriteLine("5. 랜덤채팅");
-            Console.WriteLine("0. 오늘은 집에서 쉬도록 하자!");
 
-            if(Player.player.ticket <= 5)
+            if (Player.player.ticket <= 5)
             {
                 Console.WriteLine("티켓이 부족합니다. 엔터를 누르면 집으로 돌아갑니다.");
                 Console.ReadKey();
                 DisplayHome();
 
             }
-            int input = CheckInput(0, 5);
-            int num = input + 25;
-
-            switch (input)
+            else
             {
-                case 0:
-                    DisplayHome();
-                    break;
-                case 1:
-                    Player.player.ticket -= 5;
-                    Console.WriteLine("사랑하는 부모님과 식사를 하며 응원과 지지를 받습니다.");
-                    Console.WriteLine("전설의 기운 획득 - 모든 스텟 +10");
-                    Item.EquipItem(num);
-                    Item.items[num].Have = true;
-                    Console.ReadKey();
-                    DisplayHome();
-                    break;
-                case 2:
-                    Player.player.ticket -= 5;
-                    Console.WriteLine("학창시절 친구와 술 한잔 하며 좋은 기운을 받습니다.");
-                    Console.WriteLine("힘의 기운 획득 - 공격력 +10");
-                    Item.EquipItem(num);
-                    Item.items[num].Have = true;
-                    Console.ReadKey();
-                    DisplayHome();
-                    break;
-                case 3:
-                    Player.player.ticket -= 5;
-                    Console.WriteLine("직장 동료와 만나 친해지며 사이가 돈독해집니다.");
-                    Console.WriteLine("방어의 기운 획득 - 방어 +10");
-                    Item.EquipItem(num);
-                    Item.items[num].Have = true;
-                    Console.ReadKey();
-                    DisplayHome();
-                    break;
-                case 4:
-                    Player.player.ticket -= 5;
-                    Console.WriteLine("대학시절 동기를 만나 최신동향 정보와 꿀팁을 공유합니다.");
-                    Console.WriteLine("체력의 기운 획득 - 체력 +10");
-                    Item.EquipItem(num);
-                    Item.items[num].Have = true;
-                    Console.ReadKey();
-                    DisplayHome();
-                    break;
-                case 5:
-                    Player.player.ticket -= 5;
-                    Console.WriteLine("랜덤채팅에서 이상한 사람을 만나 큰일날 뻔 했지만 겨우 도망쳤습니다.");
-                    Console.WriteLine("나태의 기운 획득 - 모든 스텟 -10");
-                    Item.EquipItem(num);
-                    Item.items[num].Have = true;
-                    Console.ReadKey();
-                    DisplayHome();
-                    break;
-                default:
-                    Console.WriteLine("잘못된 입력입니다.");
-                    break;
+                Console.WriteLine("1. 부모님");
+                Console.WriteLine("2. 학창시절 친구");
+                Console.WriteLine("3. 직장 동료");
+                Console.WriteLine("4. 대학교 동기");
+                Console.WriteLine("5. 랜덤채팅");
+                Console.WriteLine("0. 오늘은 집에서 쉬도록 하자!");
 
+                if (Player.player.ticket <= 5)
+                {
+                    Console.WriteLine("티켓이 부족합니다. 엔터를 누르면 집으로 돌아갑니다.");
+                    Console.ReadKey();
+                    DisplayHome();
+
+                }
+                int input = CheckInput(0, 5);
+                int num = input + 25;
+
+                switch (input)
+                {
+                    case 0:
+                        DisplayHome();
+                        break;
+                    case 1:
+                        Player.player.ticket -= 5;
+                        Console.WriteLine("사랑하는 부모님과 식사를 하며 응원과 지지를 받습니다.");
+                        Console.WriteLine("전설의 기운 획득 - 모든 스텟 +10");
+                        Item.EquipItem(num);
+                        Item.items[num].Have = true;
+                        Console.ReadKey();
+                        DisplayHome();
+                        break;
+                    case 2:
+                        Player.player.ticket -= 5;
+                        Console.WriteLine("학창시절 친구와 술 한잔 하며 좋은 기운을 받습니다.");
+                        Console.WriteLine("힘의 기운 획득 - 공격력 +10");
+                        Item.EquipItem(num);
+                        Item.items[num].Have = true;
+                        Console.ReadKey();
+                        DisplayHome();
+                        break;
+                    case 3:
+                        Player.player.ticket -= 5;
+                        Console.WriteLine("직장 동료와 만나 친해지며 사이가 돈독해집니다.");
+                        Console.WriteLine("방어의 기운 획득 - 방어 +10");
+                        Item.EquipItem(num);
+                        Item.items[num].Have = true;
+                        Console.ReadKey();
+                        DisplayHome();
+                        break;
+                    case 4:
+                        Player.player.ticket -= 5;
+                        Console.WriteLine("대학시절 동기를 만나 최신동향 정보와 꿀팁을 공유합니다.");
+                        Console.WriteLine("체력의 기운 획득 - 체력 +10");
+                        Item.EquipItem(num);
+                        Item.items[num].Have = true;
+                        Console.ReadKey();
+                        DisplayHome();
+                        break;
+                    case 5:
+                        Player.player.ticket -= 5;
+                        Console.WriteLine("랜덤채팅에서 이상한 사람을 만나 큰일날 뻔 했지만 겨우 도망쳤습니다.");
+                        Console.WriteLine("나태의 기운 획득 - 모든 스텟 -10");
+                        Item.EquipItem(num);
+                        Item.items[num].Have = true;
+                        Console.ReadKey();
+                        DisplayHome();
+                        break;
+                    default:
+                        Console.WriteLine("잘못된 입력입니다.");
+                        break;
+
+                }
             }
         }
          
@@ -540,12 +553,13 @@ namespace ConsoleRPG
         {
             Console.Clear();
             Console.WriteLine("출근하려는 회사를 선택하세요.");
-            Console.WriteLine("1. 아르바이트 : 공방합 10이상, 체력 100이상 권장");
-            Console.WriteLine("2. 중소기업 : 공방합 25이상, 체력 250이상 권장");
-            Console.WriteLine("3. 중견기업 : 공방합 40이상, 체력 400이상 권장");
-            Console.WriteLine("4. 대기업 : 공방합 55이상, 체력 550이상 권장");
-            Console.WriteLine("5. 글로벌기업 : 공방합 70이상, 체력 700이상 권장");
+            Console.WriteLine("1. 아르바이트 : 1티어 아이템 1개 이상 장착 권장");
+            Console.WriteLine("2. 중소기업 : 모든 1티어 아이템 장착 권장");
+            Console.WriteLine("3. 중견기업 : 모든 2티어 아이템 장착 권장");
+            Console.WriteLine("4. 대기업 : 모든 3티어 아이템 장착 권장");
+            Console.WriteLine("5. 글로벌기업 : 모든 4티어 아이템 장착 권장");
             Console.WriteLine("6. 히든 : 모든 최상위 아이템 장착 권장");
+            Console.WriteLine();
             Console.WriteLine("0. 오늘은 집에서 쉬도록 하자!");
 
             int input = CheckInput(0, 6);

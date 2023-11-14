@@ -83,15 +83,14 @@ namespace ConsoleRPG
                 Console.ResetColor();
             }
             else
-                Console.Write(" ");
-            Console.Write($"{Name}");
+            Console.Write("   ");
+            Console.Write($"이름 : {Name}");
             Console.Write(" | ");
             if (Price != 0) Console.Write($"가격 : {Price}");
             Console.Write(" | ");
             if (Attack != 0) Console.Write($"Atk {(Attack >= 0 ? "+" : "")}{Attack} ");
             if (Defend != 0) Console.Write($"Def {(Defend >= 0 ? "+" : "")}{Defend} ");
             if (Health != 0) Console.Write($"Hp {(Health >= 0 ? "+" : "")}{Health}");
-            Console.Write(" | ");
             Console.WriteLine();
 
         }
@@ -99,9 +98,13 @@ namespace ConsoleRPG
 
         public static void EquipItem(int idx)
         {
+            if (items[idx].Equip)
+            {
+                Console.WriteLine("이미 장착중인 아이템입니다.");
+            }
             int remain = idx % 5;
             int start = idx - remain + 1;
-            for (int i = start; i < start + 5; i++)
+            for (int i = start; i < start + 6; i++)
             {
                 items[i].Equip = false;
             }
