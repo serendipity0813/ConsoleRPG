@@ -46,6 +46,7 @@ namespace ConsoleRPG
         public int exp = 0;
         public int ticket = 0;
         public bool IsDead => Health < 0;
+        public static Player player;
 
 
         //캐릭터 클래스 속성
@@ -60,6 +61,12 @@ namespace ConsoleRPG
             Money = money;
         }
 
+
+        public static void PlayerDataSetting()
+        {
+            player = new Player("Unity", "개발자", 1, 100, 10, 5, 10);      //캐릭터 초기값 세팅
+        }
+
         public void TakeDamage(int damage)
         {
             Health -= damage;
@@ -72,7 +79,7 @@ namespace ConsoleRPG
             int sum = 0;
             for (int i = 0; i < Item.ItemCnt; i++)
             {
-                if (items[i].Equip) sum += items[i].Attack;
+                if (Item.items[i].Equip) sum += Item.items[i].Attack;
             }
             return sum;
         }
@@ -82,7 +89,7 @@ namespace ConsoleRPG
             int sum = 0;
             for (int i = 0; i < Item.ItemCnt; i++)
             {
-                if (items[i].Equip) sum += items[i].Defend;
+                if (Item.items[i].Equip) sum += Item.items[i].Defend;
             }
             return sum;
         }
@@ -92,8 +99,9 @@ namespace ConsoleRPG
             int sum = 0;
             for (int i = 0; i < Item.ItemCnt; i++)
             {
-                if (items[i].Equip) sum += items[i].Health;
+                if (Item.items[i].Equip) sum += Item.items[i].Health;
             }
+
             return sum;
         }
 

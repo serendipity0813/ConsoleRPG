@@ -47,7 +47,7 @@ namespace ConsoleRPG
         public int Health { get; set; }
         public int Price { get; set; }
 
-        static Item[] items;
+        public static Item[] items;
         public static int ItemCnt = 0;
 
 
@@ -106,9 +106,9 @@ namespace ConsoleRPG
                 items[i].Equip = false;
             }
             items[idx].Equip = !items[idx].Equip;
-            player.Attack += items[idx].Attack;
-            player.Defend += items[idx].Defend;
-            player.Health += items[idx].Health;
+            Player.player.Attack += items[idx].Attack;
+            Player.player.Defend += items[idx].Defend;
+            Player.player.Health += items[idx].Health;
         }
         public static void BuyItem(int input)
         {
@@ -119,7 +119,7 @@ namespace ConsoleRPG
                 GameManager.DisplayShop();
             }
 
-            else if (player.Money < items[input].Price)
+            else if (Player.player.Money < items[input].Price)
             {
                 Console.WriteLine("잔액이 부족합니다.");
                 Console.ReadKey();
@@ -128,7 +128,7 @@ namespace ConsoleRPG
 
             else
             {
-                player.Money -= items[input].Price;
+                Player.player.Money -= items[input].Price;
                 items[input].Have = true;
                 Console.WriteLine($"{items[input].Price} 을 지불하고 {items[input].Name} 을 구입하였습니다.");
                 Console.WriteLine("Enter를 누르면 상점으로 돌아갑니다.");
@@ -140,16 +140,62 @@ namespace ConsoleRPG
         {
             int sellmoney;
             sellmoney = items[idx].Price / 10 * 8;
-            player.Money += sellmoney;
+            Player.player.Money += sellmoney;
             items[idx].Have = !items[idx].Have;
             if (items[idx].Equip)
                 items[idx].Equip = !items[idx].Equip;
         }
         public static void AddItem(Item item)
+        {          
+                if (Item.ItemCnt == 34) return;
+                items[Item.ItemCnt] = item;
+                Item.ItemCnt++;         
+
+        }
+
+        public static void ItemDataSetting()
         {
-            if (Item.ItemCnt == 34) return;
-            items[Item.ItemCnt] = item;
-            Item.ItemCnt++;
+            Item.items = new Item[35];
+
+            Item.AddItem(new Item(0, " ", " ", 1, 1, 1, 1, false, false));
+
+            Item.AddItem(new Item(1, "물려받은 키보드", "weapon", 20, 0, 0, 10, false, false));
+            Item.AddItem(new Item(2, "다이소 키보드", "weapon", 40, 0, 0, 50, false, false));
+            Item.AddItem(new Item(3, "보급형 기계식 키보드", "weapon", 60, 0, 0, 250, false, false));
+            Item.AddItem(new Item(4, "전문 브랜드 기계식 키보드", "weapon", 80, 0, 0, 1250, false, false));
+            Item.AddItem(new Item(5, "장인의 맞춤제작 키보드", "weapon", 100, 0, 0, 6250, false, false));
+
+            Item.AddItem(new Item(6, "다이소 마우스", "subweapon", 10, 5, 0, 10, false, false));
+            Item.AddItem(new Item(7, "무선 마우스", "subweapon", 20, 10, 0, 50, false, false));
+            Item.AddItem(new Item(8, "무선 버티컬 마우스", "subweapon", 30, 15, 0, 250, false, false));
+            Item.AddItem(new Item(9, "전문 브랜드 마우스", "subweapon", 40, 20, 0, 1250, false, false));
+            Item.AddItem(new Item(10, "장인의 맞춤제작 마우스", "subweapon", 50, 25, 0, 6250, false, false));
+
+            Item.AddItem(new Item(11, "후드티&츄리닝 세트", "armor", 0, 0, 100, 10, false, false));
+            Item.AddItem(new Item(12, "장인 맞춤제작 정장", "armor", 0, 0, 200, 50, false, false));
+            Item.AddItem(new Item(13, "물려받은 정장", "armor", 0, 0, 300, 250, false, false));
+            Item.AddItem(new Item(14, "깔끔한 댄디룩 스타일", "armor", 0, 0, 400, 1250, false, false));
+            Item.AddItem(new Item(15, "아이언맨 슈트", "armor", 0, 0, 500, 6250, false, false));
+
+            Item.AddItem(new Item(16, "귀마개", "shield", 0, 8, 0, 10, false, false));
+            Item.AddItem(new Item(17, "유선 이어폰", "shield", 0, 16, 0, 50, false, false));
+            Item.AddItem(new Item(18, "저가형 무선 이어폰", "shield", 0, 24, 0, 250, false, false));
+            Item.AddItem(new Item(19, "고급 브랜드 무선 이어폰", "shield", 0, 32, 0, 1250, false, false));
+            Item.AddItem(new Item(20, "최상급 브랜드 고오급 해드셋 ", "shield", 0, 40, 0, 6250, false, false));
+
+            Item.AddItem(new Item(21, "손목보호대", "accessory", 0, 2, 50, 10, false, false));
+            Item.AddItem(new Item(22, "등받이 쿠션", "accessory", 0, 4, 100, 50, false, false));
+            Item.AddItem(new Item(23, "웹캠", "accessory", 0, 6, 150, 250, false, false));
+            Item.AddItem(new Item(24, "더블 모니터", "accessory", 0, 8, 200, 1250, false, false));
+            Item.AddItem(new Item(25, "전문 브랜드 맞춤 의자", "weapon", 0, 10, 250, 6250, false, false));
+
+            Item.AddItem(new Item(26, "전설의 기운", "energy", 10, 10, 10, 0, false, false));
+            Item.AddItem(new Item(27, "힘의 기운", "energy", 10, 0, 0, 0, false, false));
+            Item.AddItem(new Item(28, "방어의 기운", "energy", 0, 10, 0, 0, false, false));
+            Item.AddItem(new Item(29, "체력의 기운", "energy", 0, 0, 10, 0, false, false));
+            Item.AddItem(new Item(30, "나태의 기운", "energy", -10, -10, -10, 0, false, false));
+
+
         }
 
     }

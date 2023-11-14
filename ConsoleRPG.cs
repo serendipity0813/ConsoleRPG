@@ -23,14 +23,12 @@ namespace ConsoleRPG
 {
     internal class ConsoleRPG
     {
-        public static Player player;
-        public static Item[] items;
-        public static Monster[] companys;
-
 
         public static void Main(string[] args)
         {
-            GameManager.DataSetting();
+            Item.ItemDataSetting();
+            Player.PlayerDataSetting();
+            Monster.MonsterDataSetting();
             GameManager.DisplayHome();
         }
 
