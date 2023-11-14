@@ -61,15 +61,16 @@ namespace ConsoleRPG
 
         public void TakeDamage(int damage)
         {
-            Health -= damage;
+            Health -= (damage-Defend);
             if (IsDead) Console.WriteLine($"{Name}이(가) 죽었습니다.");
             else Console.WriteLine($"{Name}이(가) {damage}의 데미지를 받았습니다. 남은 체력: {Health}");
         }
 
         public static void Work(int idx)
         {
-            idx = idx + 1;
             Console.Clear();
+            int Pmaxhp = Player.player.Health;
+            int Mmaxhp = Monster.companys[idx].Health;
             Console.WriteLine($"출근합니다! 플레이어 정보: 체력({Player.player.Health}), 공격력({Player.player.Attack}), 방어력({Player.player.Defend})");
             Console.WriteLine($"회사정보 : 이름({companys[idx].Name}), 체력({companys[idx].Health}), 공격력({companys[idx].Attack}), 방어력({Player.player.Defend})");
             Console.WriteLine("----------------------------------------------------");
@@ -84,6 +85,9 @@ namespace ConsoleRPG
 
                 if (companys[idx].IsDead)
                 {
+                    Player.player.Health = Pmaxhp;
+                    Monster.companys[idx].Health = Mmaxhp;
+
                     Player.player.Money += companys[idx].Money;
                     Player.player.exp += idx;
                     Console.WriteLine($"{idx} 만큼 경험치를 획득합니다");
@@ -109,6 +113,8 @@ namespace ConsoleRPG
 
                 if (Player.player.IsDead)
                 {
+                    Player.player.Health = Pmaxhp;
+                    Monster.companys[idx].Health = Mmaxhp;
                     Console.WriteLine($"퇴사하고 집으로 돌아갑니다.");
                     break;
                 }

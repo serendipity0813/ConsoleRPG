@@ -89,11 +89,11 @@ namespace ConsoleRPG
             Console.WriteLine("소유하고 있는 아이템을 확인합니다.");
             Console.WriteLine();
             Console.WriteLine("[아이템 목록]");
-            Console.WriteLine("[장착/소지 여부]  |  [아이템 번호]   |  [아이템 이름]  |  [아이템 타입]  |  [아이템 효과]  ");
             for (int i = 1; i < Item.ItemCnt; i++)
             {
                 if (Item.items[i].Have == true)
                 {
+                    Console.Write($"{Item.items[i].Number}. ");
                     Item.items[i].PrintItemData();
                 }
             }
@@ -469,6 +469,13 @@ namespace ConsoleRPG
             Console.WriteLine("5. 랜덤채팅");
             Console.WriteLine("0. 오늘은 집에서 쉬도록 하자!");
 
+            if(Player.player.ticket <= 5)
+            {
+                Console.WriteLine("티켓이 부족합니다. 엔터를 누르면 집으로 돌아갑니다.");
+                Console.ReadKey();
+                DisplayHome();
+
+            }
             int input = CheckInput(0, 5);
             int num = input + 25;
 
@@ -483,6 +490,7 @@ namespace ConsoleRPG
                     Console.WriteLine("전설의 기운 획득 - 모든 스텟 +10");
                     Item.EquipItem(num);
                     Item.items[num].Have = true;
+                    Console.ReadKey();
                     DisplayHome();
                     break;
                 case 2:
@@ -491,6 +499,7 @@ namespace ConsoleRPG
                     Console.WriteLine("힘의 기운 획득 - 공격력 +10");
                     Item.EquipItem(num);
                     Item.items[num].Have = true;
+                    Console.ReadKey();
                     DisplayHome();
                     break;
                 case 3:
@@ -499,6 +508,7 @@ namespace ConsoleRPG
                     Console.WriteLine("방어의 기운 획득 - 방어 +10");
                     Item.EquipItem(num);
                     Item.items[num].Have = true;
+                    Console.ReadKey();
                     DisplayHome();
                     break;
                 case 4:
@@ -507,6 +517,7 @@ namespace ConsoleRPG
                     Console.WriteLine("체력의 기운 획득 - 체력 +10");
                     Item.EquipItem(num);
                     Item.items[num].Have = true;
+                    Console.ReadKey();
                     DisplayHome();
                     break;
                 case 5:
@@ -515,6 +526,7 @@ namespace ConsoleRPG
                     Console.WriteLine("나태의 기운 획득 - 모든 스텟 -10");
                     Item.EquipItem(num);
                     Item.items[num].Have = true;
+                    Console.ReadKey();
                     DisplayHome();
                     break;
                 default:

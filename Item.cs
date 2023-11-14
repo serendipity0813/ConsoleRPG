@@ -84,7 +84,7 @@ namespace ConsoleRPG
             }
             else
                 Console.Write(" ");
-            Console.Write($"이름 : {Name}");
+            Console.Write($"{Name}");
             Console.Write(" | ");
             if (Price != 0) Console.Write($"가격 : {Price}");
             Console.Write(" | ");
