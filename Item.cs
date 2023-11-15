@@ -1,58 +1,42 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlTypes;
-using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
-using System.Security.Policy;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 using static ConsoleRPG.ConsoleRPG;
 
 
 namespace ConsoleRPG
 {
 
-    public interface IItem
+    public interface IItem      //아이템 인터페이스
     {
-        int Number { get; set; }
-        bool Equip { get; set; }
-        bool Have { get; set; }
-        string Name { get; set; }
-        string Type { get; set; }
-        int Attack { get; set; }
-        int Defend { get; set; }
-        int Health { get; set; }
-        int Price { get; set; }
+        int Number { get; }
+        bool Equip { get; set; }        //장착여부 메소드로 수정 가능
+        bool Have { get; set; }         //아이템 구매, 판매 메소드로 수정 가능
+        string Name { get; }
+        string Type { get; }
+        int Attack { get; }
+        int Defend { get; }
+        int Health { get; }
+        int Price { get; }
 
     }
     public class Item : IItem
     {
-        public int Number { get; set; }
-        public bool Equip { get; set; }
-        public bool Have { get; set; }
-        public string Name { get; set; }
-        public string Type { get; set; }
-        public int Attack { get; set; }
-        public int Defend { get; set; }
-        public int Health { get; set; }
-        public int Price { get; set; }
+        public int Number { get;}
+        public bool Equip { get; set; }     //장착여부 메소드로 수정 가능
+        public bool Have { get; set; }      //아이템 구매, 판매 메소드로 수정 가능
+        public string Name { get; }
+        public string Type { get;}
+        public int Attack { get; }
+        public int Defend { get; }
+        public int Health { get; }
+        public int Price { get; }
 
-        public static Item[] items;
-        public static int ItemCnt = 0;
+        public static Item[] items;     //아이템 클래스 배열 선언
+        public static int ItemCnt = 0;      //아이템 개수 카운터
 
 
         public Item(int number, string name, string type, int attack, int defend, int health, int price, bool have = false, bool equip = false)
-        {
+        {  
+            //아이템 클래스 속성
             Number = number;
             Name = name;
             Type = type;
@@ -64,11 +48,11 @@ namespace ConsoleRPG
             Have = have;
         }
 
-        public void PrintItemData()
+        public void PrintItemData()     //아이템 데이터 출력 함수 
         {
             if (Equip)
             {
-                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.ForegroundColor = ConsoleColor.Cyan;        //아이템 장착시 출력
                 Console.Write("[");
                 Console.Write("E");
                 Console.Write("]");
@@ -76,14 +60,14 @@ namespace ConsoleRPG
             }
             else if (Have)
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.ForegroundColor = ConsoleColor.Yellow;      //아이템 보유시 출력
                 Console.Write("[");
                 Console.Write("I");
                 Console.Write("]");
                 Console.ResetColor();
             }
             else
-            Console.Write("   ");
+            Console.Write("   ");                   //아이템 이름, 가격 등 출력 후 아이템 효과중 0이 아닌 효과 출력
             Console.Write($"이름 : {Name}");
             Console.Write(" | ");
             if (Price != 0) Console.Write($"가격 : {Price}");
@@ -96,33 +80,33 @@ namespace ConsoleRPG
         }
 
 
-        public static void EquipItem(int idx)
+        public static void EquipItem(int idx)       //아이템 장착 메소드
         {
-            if (items[idx].Equip)
+            if (items[idx].Equip)       //이미 장착중인 아이템의 경우 출력
             {
                 Console.WriteLine("이미 장착중인 아이템입니다.");
             }
-            int remain = idx % 5;
-            int start = idx - remain + 1;
-            for (int i = start; i < start + 6; i++)
+            int remain = idx % 5;                                       //아이템이 5단위로 타입이 나뉘기 때문에 5로 나눠 나머지 확인
+            int start = idx - remain + 1;                               //해당 아이템 타입의 첫 번째 아이템 변수를 찾아 START에 저장 
+            for (int i = start; i < start + 6; i++)                     //해당 아이템 부터 5개의 아이템(같은 타입 아이템)의 장착 여부를 FALSE로 전환 - 단일장착을 위해
             {
-                items[i].Equip = false;
+                items[i].Equip = false;     
             }
-            items[idx].Equip = !items[idx].Equip;
+            items[idx].Equip = !items[idx].Equip;                       //선택한 아이템을 장착하며 아이템 효과를 캐릭터 속성에 추가 합산하여 적용
             Player.player.Attack += items[idx].Attack;
             Player.player.Defend += items[idx].Defend;
             Player.player.Health += items[idx].Health;
         }
-        public static void BuyItem(int input)
+        public static void BuyItem(int input)               //아이템 구매 메소드
         {
-            if (items[input].Have == true)
+            if (items[input].Have == true)      //아이템을 이미 가지고 있는 경우 아이템샵 씬 다시 호출
             {
                 Console.WriteLine("이미 가지고 있는 물건입니다.");
                 Console.ReadKey();
                 GameManager.DisplayShop();
             }
 
-            else if (Player.player.Money < items[input].Price)
+            else if (Player.player.Money < items[input].Price)      //아이템 가격보다 보유 금액이 부족한 경우 아이템샵 씬 다시 호출
             {
                 Console.WriteLine("잔액이 부족합니다.");
                 Console.ReadKey();
@@ -131,7 +115,7 @@ namespace ConsoleRPG
 
             else
             {
-                Player.player.Money -= items[input].Price;
+                Player.player.Money -= items[input].Price;          //아이템 금액만큼 보유금액 차감 후 아이템 보유 bool값을 true로 전환
                 items[input].Have = true;
                 Console.WriteLine($"{items[input].Price} 을 지불하고 {items[input].Name} 을 구입하였습니다.");
                 Console.WriteLine("Enter를 누르면 상점으로 돌아갑니다.");
@@ -139,24 +123,24 @@ namespace ConsoleRPG
                 GameManager.DisplayShop();
             }
         }
-        public static void SellItem(int idx)
+        public static void SellItem(int idx)        //아이템 판매 메소드
         {
             int sellmoney;
-            sellmoney = items[idx].Price / 10 * 8;
-            Player.player.Money += sellmoney;
-            items[idx].Have = !items[idx].Have;
+            sellmoney = items[idx].Price / 10 * 8;      //판매금액을 아이템 가격의 80%로 계산하여 저장
+            Player.player.Money += sellmoney;           //판매 금액만큼 플레이어 보유 금액 추가합산
+            items[idx].Have = !items[idx].Have;             
             if (items[idx].Equip)
-                items[idx].Equip = !items[idx].Equip;
+                items[idx].Equip = !items[idx].Equip;       //아이템을 장착하고 있었다면 해제하고 아이템 소지 bool값을 false로 전환
         }
-        public static void AddItem(Item item)
+        public static void AddItem(Item item)               //아이템 추가 메소드
         {          
-                if (Item.ItemCnt == 34) return;
-                items[Item.ItemCnt] = item;
+                if (Item.ItemCnt == 34) return;             //아이템 숫자는 35개 까지 (0번 포함) 가능
+                items[Item.ItemCnt] = item;                 //아이템 배열에 해당 아이템 데이터를 저장
                 Item.ItemCnt++;         
 
         }
 
-        public static void ItemDataSetting()
+        public static void ItemDataSetting()        //아이템 배열 선언 후 아이템 클래스 객체 생성 후 배열에 저장
         {
             Item.items = new Item[35];
 

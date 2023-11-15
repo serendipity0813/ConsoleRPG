@@ -4,13 +4,13 @@ using static ConsoleRPG.ConsoleRPG;
 
 namespace ConsoleRPG
 {
-    internal class GameManager
+    internal class GameManager      //게임 기능적인 부분을 관리하는 클래스
     {
 
 
         //Display 함수 모음    
 
-        public static void DisplayHome()
+        public static void DisplayHome()        //메인 로비화면 출력
         {
             Console.Clear();    //콘솔창 정리 후 집에 도착했다는 문구와 함께 선택지 출력
 
@@ -25,7 +25,7 @@ namespace ConsoleRPG
             Console.WriteLine("5. 회사로 출근");
             Console.WriteLine();
 
-            int input = CheckInput(1, 5);
+            int input = CheckInput(1, 5);       //입력하는 숫자에 따라 화면 출력
 
             switch (input)
             {
@@ -53,11 +53,11 @@ namespace ConsoleRPG
 
         }
 
-        public static void DisplayInfo()
+        public static void DisplayInfo()        //캐릭터 정보 화면 출력
         {
             Console.Clear();
 
-            Console.WriteLine("나의 정보를 표시합니다.");
+            Console.WriteLine("나의 정보를 표시합니다.");         //플레이어의 이름, 직업 등등 수치 출력 및 추가수치도 따로 표시
             Console.WriteLine();
             Console.WriteLine($"이름 : {Player.player.Name}");
             Console.WriteLine($"직업 : {Player.player.Job}");
@@ -82,7 +82,7 @@ namespace ConsoleRPG
             }
         }
 
-        public static void DisplayInventory()
+        public static void DisplayInventory()       //아이템 인벤토리 출력
         {
             Console.Clear();
 
@@ -90,7 +90,7 @@ namespace ConsoleRPG
             Console.WriteLine();
             Console.WriteLine("[아이템 목록]");
             Console.WriteLine();
-            for (int i = 1; i < Item.ItemCnt; i++)
+            for (int i = 1; i < Item.ItemCnt; i++)      //모든 아이템을 확인하며 HAVE 값이 TRUE라면 아이템 데이터 출력
             {
                 if (Item.items[i].Have == true)
                 {
@@ -99,7 +99,7 @@ namespace ConsoleRPG
                 }
             }
 
-            Console.WriteLine(" ");
+            Console.WriteLine(" ");             //추가로 진행할 수 있는 기능 출력
 
             Console.WriteLine("0. 나가기");
             Console.WriteLine("1. 장착관리");
@@ -127,7 +127,7 @@ namespace ConsoleRPG
             Console.Clear();
         }
 
-        public static void DisplayShop()
+        public static void DisplayShop()        //아이템 상점화면 출력 
         {
             Console.Clear();
 
@@ -172,14 +172,14 @@ namespace ConsoleRPG
 
         }
 
-        public static void DisplayWeaponShop()
+        public static void DisplayWeaponShop()      //무기상점 출력
         {
             Console.Clear();
 
             Console.WriteLine($"현재 보유금액 : {Player.player.Money}");
             Console.WriteLine("구입하려는 키보드를 선택하세요.");
             Console.WriteLine();
-            for (int i = 1; i < 6; i++)
+            for (int i = 1; i < 6; i++)     //아이템 고유번호 1~5번까지 아이템 데이터 출력
             {
                 Console.Write("{0}. ", i);
                 Item.items[i].PrintItemData();
@@ -189,7 +189,7 @@ namespace ConsoleRPG
             Console.WriteLine("구매를 원하는 키보드의 번호를 입력하세요.");
 
 
-            int input = CheckInput(0, 5);
+            int input = CheckInput(0, 5);       //아이템 구매시 선택한 번호를 idx로 받아 아이템 구매 메소드 실행
 
             switch (input)
             {
@@ -219,14 +219,14 @@ namespace ConsoleRPG
 
 
         }
-        public static void DisplaySubweaponShop()
+        public static void DisplaySubweaponShop()       //보조무기 상점화면 출력
         {
             Console.Clear();
 
             Console.WriteLine($"현재 보유금액 : {Player.player.Money}");
             Console.WriteLine("구입하려는 마우스를 선택하세요.");
             Console.WriteLine();
-            for (int i = 6; i < 11; i++)
+            for (int i = 6; i < 11; i++)                //보조무기 아이템 데이터 출력
             {
                 Console.Write("{0}. ", i - 5);
                 Item.items[i].PrintItemData();
@@ -238,7 +238,7 @@ namespace ConsoleRPG
 
             int input = CheckInput(0, 5);
 
-            switch (input)
+            switch (input)          //선택한 번호 +5를 인덱스로 받아 아이템 구매 메소드 출력 - 보조무기는 6부터 시작하기 때문
             {
                 case 0:
                     DisplayHome();
@@ -270,7 +270,7 @@ namespace ConsoleRPG
             }
 
         }
-        public static void DisplayArmorShop()
+        public static void DisplayArmorShop()       //갑옷 상점 출력, 기능은 다른 상점과 동일함
         {
             Console.Clear();
 
@@ -320,7 +320,7 @@ namespace ConsoleRPG
 
             }
         }
-        public static void DisplayShieldShop()
+        public static void DisplayShieldShop()      //방어구 상점 출력, 기능 동일
         {
             Console.Clear();
 
@@ -370,7 +370,7 @@ namespace ConsoleRPG
 
             }
         }
-        public static void DisplayAccessoryShop()
+        public static void DisplayAccessoryShop()       //장신구 상점 출력, 기능은 동일
         {
             Console.Clear();
 
@@ -421,16 +421,16 @@ namespace ConsoleRPG
             }
         }
 
-        public static void DisplayItemEquip()
+        public static void DisplayItemEquip()       //아이템 장착관리 선택시 출력되는 화면
         {
             Console.WriteLine("장착하려는 아이템의 번호를 입력해주세요.");
             Console.WriteLine("");
             Console.WriteLine("0. 나가기");
-            int input = CheckInput(0, Item.ItemCnt);
+            int input = CheckInput(0, Item.ItemCnt);        //장착을 원하는 아이템 선택시 선택 숫자를 idx로 받아 아이템 장착 메소드 출력
 
             switch (input)
             {
-                case 0:
+                case 0://장착을 원하는 아이템 선택시 선택 숫자를 idx로 받아 아이템 장착 메소드 출력
                     DisplayHome();
                     break;
                 default:
@@ -440,12 +440,12 @@ namespace ConsoleRPG
             }
         }
 
-        public static void DisplayItemSell()
+        public static void DisplayItemSell()        //아이템 판매 선택시 출력되는 화면
         {
             Console.WriteLine("판매하려는 아이템의 번호를 입력해주세요.");
             Console.WriteLine("");
             Console.WriteLine("0. 나가기");
-            int input = CheckInput(0, Item.ItemCnt);
+            int input = CheckInput(0, Item.ItemCnt);        //판매를 원하는 아이템 선택시 번호를 idx로 받아 아이템 판매 메소드 출력
 
             switch (input)
             {
@@ -459,13 +459,13 @@ namespace ConsoleRPG
             }
         }
 
-        public static void DisplayCommunity()
+        public static void DisplayCommunity()       //커뮤니티 화면 출력
         {
             Console.Clear();
             Console.WriteLine("ticket을 5개 소비하고 만나고자 하는 지인을 선택하세요");
             Console.WriteLine($"보유티켓 : {Player.player.ticket}");
 
-            if (Player.player.ticket <= 5)
+            if (Player.player.ticket <= 5)          //커뮤니티 진행은 티켓이 5개 소비되므로 5개 이하 소지시 로비로 돌아가도록 설정
             {
                 Console.WriteLine("티켓이 부족합니다. 엔터를 누르면 집으로 돌아갑니다.");
                 Console.ReadKey();
@@ -474,6 +474,9 @@ namespace ConsoleRPG
             }
             else
             {
+                    //티켓이 5개 이상이라면 선택지 출력
+            }
+            {
                 Console.WriteLine("1. 부모님");
                 Console.WriteLine("2. 학창시절 친구");
                 Console.WriteLine("3. 직장 동료");
@@ -481,23 +484,17 @@ namespace ConsoleRPG
                 Console.WriteLine("5. 랜덤채팅");
                 Console.WriteLine("0. 오늘은 집에서 쉬도록 하자!");
 
-                if (Player.player.ticket <= 5)
-                {
-                    Console.WriteLine("티켓이 부족합니다. 엔터를 누르면 집으로 돌아갑니다.");
-                    Console.ReadKey();
-                    DisplayHome();
 
-                }
                 int input = CheckInput(0, 5);
-                int num = input + 25;
+                int num = input + 25;       //커뮤니티 진행시 획득하는 아이템 고유번호가 26~30이므로 
 
                 switch (input)
                 {
                     case 0:
                         DisplayHome();
                         break;
-                    case 1:
-                        Player.player.ticket -= 5;
+                    case 1:      //티켓을 소비하고 아이템 획득 및 자동장착
+                        Player.player.ticket -= 5;      
                         Console.WriteLine("사랑하는 부모님과 식사를 하며 응원과 지지를 받습니다.");
                         Console.WriteLine("전설의 기운 획득 - 모든 스텟 +10");
                         Item.EquipItem(num);
@@ -549,7 +546,7 @@ namespace ConsoleRPG
             }
         }
          
-        public static void DisplayCompany()
+        public static void DisplayCompany()     //던전선택 화면 출력
         {
             Console.Clear();
             Console.WriteLine("출근하려는 회사를 선택하세요.");
@@ -570,18 +567,18 @@ namespace ConsoleRPG
                     DisplayHome();
                     break;
                 default:
-                    Monster.Work(input);
+                    Monster.Work(input);        //선택한 번호를 input으로 받아서 던전진행 함수 호출
                     break;
 
             }
 
         }
 
-        public static int CheckInput(int min, int max)
+        public static int CheckInput(int min, int max)      //입력 숫자를 판단하는 함수
         {
             while (true)
             {
-                string input = Console.ReadLine();
+                string input = Console.ReadLine();      //입력받은 값을 input에 문자로 저장
 
                 bool parseSuccess = int.TryParse(input, out var select);        //예외처리 진행하며 입력받은 값 int 변환
 
